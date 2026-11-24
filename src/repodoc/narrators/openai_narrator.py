@@ -43,7 +43,8 @@ class OpenAINarrator:
             return
         if not api_key:
             raise ConfigurationError(
-                "OPENAI_API_KEY is not set. Add it to your environment or a .env file, "
+                "OPENAI_API_KEY is not set. Add it to your environment, a .env file in this "
+                "directory or ~/.config/repodoc/.env, "
                 "or run with --offline for the built-in narrator."
             )
         self._client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)

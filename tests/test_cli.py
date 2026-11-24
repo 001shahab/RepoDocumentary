@@ -7,7 +7,7 @@ import pytest
 
 from repodoc import __version__
 from repodoc.cli import main
-from repodoc.config import DEFAULT_MODEL, Settings
+from repodoc.config import DEFAULT_MODEL, Settings, load_dotenv_files
 from repodoc.render import OutputFormat, markdown_to_html
 
 
@@ -86,6 +86,29 @@ def test_settings_from_env() -> None:
     assert settings.model == "custom"
     assert settings.reasoning_effort == "low"
     assert Settings.from_env({}).model == DEFAULT_MODEL
+
+
+def test_user_config_dotenv(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    config_home = tmp_path / "config"
+    (config_home / "repodoc").mkdir(parents=True)
+    (config_home / "repodoc" / ".env").write_text("OPENAI_API_KEY=from-user-config\n")
+    workdir = tmp_path / "elsewhere"
+    workdir.mkdir()
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(config_home))
+    monkeypatch.chdir(workdir)
+    load_dotenv_files()
+    assert Settings.from_env().api_key == "from-user-config"
+
+
+def test_local_dotenv_beats_user_config(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    config_home = tmp_path / "config"
+    (config_home / "repodoc").mkdir(parents=True)
+    (config_home / "repodoc" / ".env").write_text("OPENAI_API_KEY=from-user-config\n")
+    (tmp_path / ".env").write_text("OPENAI_API_KEY=from-cwd\n")
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(config_home))
+    monkeypatch.chdir(tmp_path)
+    load_dotenv_files()
+    assert Settings.from_env().api_key == "from-cwd"
 
 
 @pytest.mark.parametrize(

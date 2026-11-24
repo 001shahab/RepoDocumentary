@@ -80,10 +80,15 @@ cd RepoDocumentary
 pip install -e .
 ```
 
-Add your OpenAI key, either in your shell or in a `.env` file in the directory you run from:
+Add your OpenAI key, either in your shell, in a `.env` file in the directory you run from,
+or once for every project in `~/.config/repodoc/.env`:
 
 ```bash
 export OPENAI_API_KEY="sk-..."
+
+# or, to use repodoc from any directory:
+mkdir -p ~/.config/repodoc
+echo 'OPENAI_API_KEY=sk-...' > ~/.config/repodoc/.env
 ```
 
 Then roll the cameras:
@@ -166,8 +171,10 @@ Exit codes: `0` success, `1` error (with a readable message), `2` invalid argume
 
 ## Configuration
 
-Settings are read from environment variables. A `.env` file in the current directory, or in the target
-repository, is loaded automatically. Variables already exported in your shell always take precedence.
+Settings are read from environment variables. `.env` files are loaded automatically from, in order of
+precedence, the current directory, the target repository, and the user config directory
+(`$XDG_CONFIG_HOME/repodoc/.env`, by default `~/.config/repodoc/.env`). Variables already exported in
+your shell always take precedence.
 
 | Variable                   | Purpose                                                       |
 | -------------------------- | ------------------------------------------------------------- |

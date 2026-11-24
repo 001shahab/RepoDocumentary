@@ -33,13 +33,20 @@ class Settings:
         )
 
 
-def load_dotenv_files(*directories: Path) -> None:
-    """Load ``.env`` from the current directory and any *directories* given.
+def user_config_dir() -> Path:
+    """Per-user configuration directory: ``$XDG_CONFIG_HOME/repodoc`` or ``~/.config/repodoc``."""
+    base = os.environ.get("XDG_CONFIG_HOME") or str(Path.home() / ".config")
+    return Path(base).expanduser() / "repodoc"
 
-    Existing environment variables always win, so a shell ``export`` overrides a file.
+
+def load_dotenv_files(*directories: Path) -> None:
+    """Load ``.env`` from the current directory, any *directories* given, then the user config.
+
+    Earlier files win over later ones, and existing environment variables always win,
+    so a shell ``export`` overrides every file.
     """
     seen: set[Path] = set()
-    for directory in (Path.cwd(), *directories):
+    for directory in (Path.cwd(), *directories, user_config_dir()):
         candidate = (directory / ".env").resolve()
         if candidate in seen or not candidate.is_file():
             continue

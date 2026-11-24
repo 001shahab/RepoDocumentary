@@ -41,8 +41,15 @@ def _isolated_git(
     monkeypatch.setenv("HOME", str(home))
     monkeypatch.setenv("GIT_CONFIG_NOSYSTEM", "1")
     monkeypatch.setenv("GIT_CONFIG_GLOBAL", str(home / ".gitconfig"))
-    for variable in ("OPENAI_API_KEY", "REPODOC_MODEL", "REPODOC_REASONING_EFFORT"):
-        monkeypatch.delenv(variable, raising=False)
+    for variable in (
+        "OPENAI_API_KEY",
+        "REPODOC_MODEL",
+        "REPODOC_REASONING_EFFORT",
+        "XDG_CONFIG_HOME",
+    ):
+        # setenv first so monkeypatch restores the variable even if load_dotenv sets it later.
+        monkeypatch.setenv(variable, "")
+        monkeypatch.delenv(variable)
 
 
 @pytest.fixture
