@@ -23,6 +23,7 @@ repodoc https://github.com/pallets/flask --style noir
 
 ## Contents
 
+- [Example](#example)
 - [Why](#why)
 - [Features](#features)
 - [Quick start](#quick-start)
@@ -40,6 +41,14 @@ repodoc https://github.com/pallets/flask --style noir
 - [Citation](#citation)
 - [Author](#author)
 - [License](#license)
+
+## Example
+
+The nature documentary of [scenelift](https://github.com/001shahab/scenelift), produced by running `repodoc` inside the repository:
+
+<p align="center">
+  <img src="scenelift-documentary.png" alt="RepoDocumentary nature-style documentary of the scenelift repository" width="700">
+</p>
 
 ## Why
 

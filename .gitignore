@@ -28,3 +28,6 @@ htmlcov/
 
 # Local documentaries
 /documentaries/
+
+# Local exports
+scenelift-documentary.pdf
