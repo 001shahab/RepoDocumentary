@@ -1,0 +1,11 @@
+name: Feature or genre request
+description: Suggest a new feature, story beat or documentary genre
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+      description: What should RepoDocumentary do, and why would it make the story better?
+    validations:
+      required: true

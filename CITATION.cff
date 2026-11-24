@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "RepoDocumentary: Narrated documentaries from git histories"
+type: software
+authors:
+  - family-names: Anbarjafari
+    given-names: Shahab
+    email: shb@3sholding.com
+repository-code: "https://github.com/001shahab/RepoDocumentary"
+license: MIT
+version: 0.1.0
+date-released: "2026-11-24"
+keywords:
+  - git
+  - storytelling
+  - large language models
+  - developer tools
